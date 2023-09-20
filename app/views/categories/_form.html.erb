@@ -1,0 +1,9 @@
+<%= form_with model: @category do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <br>
+  <%= f.label :body %>
+  <%= f.text_area :body %>
+  <br>
+  <%= f.submit "Submit", class:"px-2 py-1 bg-green-500 hover:bg-green-600 rounded-full" %>
+<% end %>
