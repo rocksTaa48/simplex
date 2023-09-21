@@ -9,6 +9,12 @@ class SubcategoriesController < ApplicationController
 
   def new
     @subcategory = Subcategory.new
+    @categories = Category.all
+  end
+
+  def edit
+    @subcategory = Subcategory.find_by(id: params[:id])
+    @categories = Category.all
   end
 
   def create
@@ -40,6 +46,6 @@ class SubcategoriesController < ApplicationController
   private
 
   def subcategory_params
-    params.require(:subcategory).permit(:title, :body)
+    params.require(:subcategory).permit(:title, :body, :category_id)
   end
 end

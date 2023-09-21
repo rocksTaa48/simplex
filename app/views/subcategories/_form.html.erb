@@ -1,0 +1,11 @@
+<%= form_with model: @subcategory do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <br>
+  <%= f.label :body %>
+  <%= f.text_area :body  %>
+  <br>
+  <%= f.select 'category_id', options_for_select(@categories.collect{ |c| [c.title, c.id]}) %>
+  <br>
+  <%= f.submit "Submit" %>
+<% end %>

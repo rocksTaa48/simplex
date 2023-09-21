@@ -12,6 +12,11 @@ class ItemsController < ApplicationController
     @subcategories = Subcategory.all
   end
 
+  def edit
+    @item = Item.find_by(id: params[:id])
+    @subcategories = Subcategory.all
+  end
+
   def create
     @item = Item.create(item_params)
     if @item.save
