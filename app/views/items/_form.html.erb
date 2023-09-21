@@ -11,5 +11,7 @@
   <%= f.label :quantity %>
   <%= f.number_field :quantity %>
   <br>
+  <%= f.select 'subcategory_id', options_for_select(@subcategories.collect{ |s| [s.title, s.id]}) %>
+  <br>
   <%= f.submit "Submit", class:"px-2 py-1 bg-green-500 hover:bg-green-600 rounded-full" %>
 <% end %>

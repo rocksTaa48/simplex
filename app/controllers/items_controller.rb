@@ -9,6 +9,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
+    @subcategories = Subcategory.all
   end
 
   def create
