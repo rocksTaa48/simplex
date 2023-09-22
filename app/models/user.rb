@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include AASM
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise(
@@ -10,4 +11,23 @@ class User < ApplicationRecord
   )
   has_one :cart
   has_many :orders, through: :cart
+
+  include AASM
+
+  aasm do
+    state :buyer, initial: true
+    state :seller, :store, :admin
+
+    event(:up_to_seller) do
+      transitions from: :buyer, to: :seller
+    end
+
+    event(:up_to_store) do
+      transitions from: %i[buyer seller], to: :store
+    end
+
+    event(:sleep) do
+      transitions from: :buyer, to: :admin
+    end
+  end
 end
