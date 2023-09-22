@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_18_142758) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_22_165826) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "carts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "title", null: false
@@ -30,6 +37,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_142758) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subcategory_id"], name: "index_items_on_subcategory_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "cart_id", null: false
+    t.bigint "item_id", null: false
+    t.integer "quantity", null: false
+    t.string "aasm_state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_orders_on_cart_id"
+    t.index ["item_id"], name: "index_orders_on_item_id"
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -61,6 +79,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_142758) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "carts", "users"
   add_foreign_key "items", "subcategories"
+  add_foreign_key "orders", "carts"
+  add_foreign_key "orders", "items"
   add_foreign_key "subcategories", "categories"
 end
