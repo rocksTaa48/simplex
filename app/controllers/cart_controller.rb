@@ -6,7 +6,7 @@ class CartController < ApplicationController
   end
 
   def add
-    @item = Iten.find_by(id: params[:id])
+    @item = Item.find_by(id: params[:id])
     quantity = params[:quantity].to_i
     @cart = current_cart
     current_order = @cart.orders.find_by(item_id: @item.id)

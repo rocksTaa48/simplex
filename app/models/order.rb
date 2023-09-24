@@ -20,4 +20,8 @@ class Order < ApplicationRecord
       transitions from: %i[purchased sent], to: :in_point
     end
   end
+
+  def subtotal
+    item.price * quantity
+  end
 end

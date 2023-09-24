@@ -34,9 +34,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_165826) do
     t.integer "quantity", default: 1, null: false
     t.bigint "subcategory_id", null: false
     t.decimal "price", precision: 8, scale: 3, null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subcategory_id"], name: "index_items_on_subcategory_id"
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -81,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_165826) do
 
   add_foreign_key "carts", "users"
   add_foreign_key "items", "subcategories"
+  add_foreign_key "items", "users"
   add_foreign_key "orders", "carts"
   add_foreign_key "orders", "items"
   add_foreign_key "subcategories", "categories"

@@ -18,13 +18,19 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.create(item_params)
-    if @item.save
-      flash[:success] = 'Object successfully created'
-      redirect_to(root_path)
+    @subcategories = Subcategory.all
+    if current_user.seller? == true
+      @item = current_user.items.build(item_params)
+      if @item.save
+        flash[:success] = 'Object successfully created'
+        redirect_to(root_path)
+      else
+        flash[:error] = 'Something went wrong'
+        render(:new)
+      end
     else
-      flash[:error] = 'Something went wrong'
-      render(:new)
+      flash[:error] = 'You/re not a seller'
+      redirect_to(root_path)
     end
   end
 
@@ -46,6 +52,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:title, :description, :quantity, :price, :subcategory_id)
+    params.require(:item).permit(:title, :description, :quantity, :price, :subcategory_id, :user_id)
   end
 end

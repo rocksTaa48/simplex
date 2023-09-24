@@ -1,0 +1,62 @@
+<div class="min-w-full px-4 p-6 rounded-lg bg-gray-100 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-4 gap-x-4">
+  <% current_user.cart.orders.each do |order| %>
+    <% item = order.item %>
+    <div class="rounded-lg bg-white border border-gray-200 shadow-sm hover:shadow-lg flex flex-col">
+      <div class="w-full">
+        <div class="w-full p-1 grid grid-cols-8">
+          <div class="col-span-4">
+            <img class="h-24 w-24 rounded-lg" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+          </div>
+          <div class="col-span-3 p-4 text-sm font-normal text-gray-700">
+            <p><%= item.title %></p>
+          </div>
+          <!-- Dropdown section -->
+          <div x-data="{ moreOpen: false}" class="relative py-1 col-span-1">
+            <div class="flex flex-row relative justify-end">
+              <button @click="moreOpen = !moreOpen" type="button" class="w-8 h-8 top-0 right-0 text-white" id="cart_properties" aria-expanded="false" aria-haspopup="true">
+                <svg fill="#12263A" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect id="Icons" x="-256" y="-64" width="1280" height="800" style="fill:none;"></rect> <g id="Icons1" serif:id="Icons"> <g id="Strike"> </g> <g id="H1"> </g> <g id="H2"> </g> <g id="H3"> </g> <g id="list-ul"> </g> <g id="hamburger-1"> </g> <g id="hamburger-2"> </g> <g id="list-ol"> </g> <g id="list-task"> </g> <g id="trash"> </g> <g id="vertical-menu"> <circle cx="32.026" cy="12.028" r="4"></circle> <circle cx="32.026" cy="52.028" r="4"></circle> <circle cx="32.026" cy="32.028" r="4"></circle> </g> <g id="horizontal-menu"> </g> <g id="sidebar-2"> </g> <g id="Pen"> </g> <g id="Pen1" serif:id="Pen"> </g> <g id="clock"> </g> <g id="external-link"> </g> <g id="hr"> </g> <g id="info"> </g> <g id="warning"> </g> <g id="plus-circle"> </g> <g id="minus-circle"> </g> <g id="vue"> </g> <g id="cog"> </g> <g id="logo"> </g> <g id="radio-check"> </g> <g id="eye-slash"> </g> <g id="eye"> </g> <g id="toggle-off"> </g> <g id="shredder"> </g> <g id="spinner--loading--dots-" serif:id="spinner [loading, dots]"> </g> <g id="react"> </g> <g id="check-selected"> </g> <g id="turn-off"> </g> <g id="code-block"> </g> <g id="user"> </g> <g id="coffee-bean"> </g> <g id="coffee-beans"> <g id="coffee-bean1" serif:id="coffee-bean"> </g> </g> <g id="coffee-bean-filled"> </g> <g id="coffee-beans-filled"> <g id="coffee-bean2" serif:id="coffee-bean"> </g> </g> <g id="clipboard"> </g> <g id="clipboard-paste"> </g> <g id="clipboard-copy"> </g> <g id="Layer1"> </g> </g> </g></svg>
+              </button>
+            </div>
+            <!-- drop menu begin -->
+            <div x-show="moreOpen" @click.away="moreOpen = false" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none px-2">
+              <div class="w-full flex justify-center">
+                <%= form_with(url: cart_add_path) do |f| %>
+                  <button class="text-gray-700 p-0 pnumber-minus rounded-full w-7 h-7 transition ease-in-out bg-gray-200 hover:bg-gray-300 hover:scale-110 duration-300" type="button" onclick="this.nextElementSibling.stepDown(); this.nextElementSibling.onchange();">
+                    -
+                  </button>
+                  <%= f.number_field :quantity, 
+										value: order.quantity, 
+										min: 1, max: if item.quantity < 10 
+																		item.quantity 
+																		else
+																		10
+																		end,
+																		type:"number",
+																		class:"form-control mb-4 ml-3 mr-3 inline-block px-6 w-[64px] py-2.5 bg-gray-200 text-gray-700 font-medium text-sm leading-tight text-center uppercase rounded-full shadow-md" 
+									%>
+                  <button class="text-gray-700 p-0 number-plus rounded-full w-7 h-7 transition ease-in-out bg-gray-200 hover:bg-gray-300 hover:scale-110 duration-300" type="button" onclick="this.previousElementSibling.stepUp(); this.previousElementSibling.onchange();">
+                    +
+                  </button>
+                  <div class="flex justify-center" @click.submit="moreOpen = false">
+                    <%= f.hidden_field :id, value: item.id %>
+                    <%= f.button :submit do %>
+                      <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 3V6.4C7 6.96005 7 7.24008 7.10899 7.45399C7.20487 7.64215 7.35785 7.79513 7.54601 7.89101C7.75992 8 8.03995 8 8.6 8H15.4C15.9601 8 16.2401 8 16.454 7.89101C16.6422 7.79513 16.7951 7.64215 16.891 7.45399C17 7.24008 17 6.96005 17 6.4V4M17 21V14.6C17 14.0399 17 13.7599 16.891 13.546C16.7951 13.3578 16.6422 13.2049 16.454 13.109C16.2401 13 15.9601 13 15.4 13H8.6C8.03995 13 7.75992 13 7.54601 13.109C7.35785 13.2049 7.20487 13.3578 7.10899 13.546C7 13.7599 7 14.0399 7 14.6V21M21 9.32548V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3H14.6745C15.1637 3 15.4083 3 15.6385 3.05526C15.8425 3.10425 16.0376 3.18506 16.2166 3.29472C16.4184 3.4184 16.5914 3.59135 16.9373 3.93726L20.0627 7.06274C20.4086 7.40865 20.5816 7.5816 20.7053 7.78343C20.8149 7.96237 20.8957 8.15746 20.9447 8.36154C21 8.59171 21 8.8363 21 9.32548Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <!-- drop menu end -->
+          </div>
+          <!-- End dropdown section -->
+        </div>
+        <div class="px-1 flex flex-row">
+          <div class="basis-2/3">
+            <p class="px-1">Total $ <%= order.subtotal %> </p>
+          </div>
+          <%= check_box_tag "order_ids[]", order.id, nil, { multiple: true, form: :checked_form } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

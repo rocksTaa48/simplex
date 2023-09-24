@@ -1,0 +1,7 @@
+<% navbar_at %>
+<%= render partial: "cart/cart" %>
+<div>
+  <%= form_with url: checked_orders_path, data:{ "turbo-method": :delete }, id: :checked_form do |form| %>
+    <%= form.submit "Delete" %>
+  <% end %>
+</div>

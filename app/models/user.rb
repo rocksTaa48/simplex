@@ -9,10 +9,14 @@ class User < ApplicationRecord
     :rememberable,
     :validatable
   )
-  has_one :cart
+  has_one :cart, dependent: :destroy
   has_many :orders, through: :cart
+  has_many :items
 
-  include AASM
+  def current_cart
+    create_cart(user_id: id) if cart.nil?
+    cart
+  end
 
   aasm do
     state :buyer, initial: true

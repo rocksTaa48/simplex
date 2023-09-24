@@ -1,2 +1,7 @@
 <%= render @item %>
+<%= form_with(url: cart_add_path) do |f| %>
+  <%= f.hidden_field :id, value: @item.id %>
+  <%= f.number_field :quantity, value: 1, min: 1 %>
+  <%= f.submit "Add To Cart" %>
+<% end %>
 <%= link_to "Edit", edit_item_path(@item) %>

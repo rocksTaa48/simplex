@@ -1,5 +1,5 @@
 <%= provide :navbar do %>
-  <div x-data="{ openMenu : false, isOpen : false }" :class="openMenu ? 'overflow-hidden' : 'overflow-visible' " @keydown.escape.window="isOpen = false">
+  <div class="mb-20" x-data="{ openMenu : false, isOpen : false }" :class="openMenu ? 'overflow-hidden' : 'overflow-visible' " @keydown.escape.window="isOpen = false">
     <style>
       [x-cloak] {
         display: none !important;
