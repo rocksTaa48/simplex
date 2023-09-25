@@ -24,4 +24,6 @@ Rails.application.routes.draw do
       post(:checked)
     end
   end
+
+  resources(:users, only: %i[show])
 end
