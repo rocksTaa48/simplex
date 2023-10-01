@@ -7,7 +7,7 @@
       <a href="#" class="inline-flex py-2 px-3 hover:bg-[#B5ABA6]/40 rounded">About</a>
     </li>
     <li>
-      <button class="inline-flex py-2 px-3 hover:bg-[#B5ABA6]/40 backdrop-blur-sm rounded">Catalogue</button>
+      <%= link_to "Catalogue", categories_path, class:"inline-flex py-2 px-3 hover:bg-[#B5ABA6]/40 backdrop-blur-sm rounded" %>
     </li>
     <li>
       <% if user_signed_in? %>

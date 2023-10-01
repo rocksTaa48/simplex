@@ -1,8 +1,10 @@
-<%= link_to item.title, item_path(item) %>
-<br>
-<%= item.description %>
-<br>
-<%= item.price %>
-<br>
-<%= item.quantity %>
-<p>---------------------</p>
+<div class="xl:w-1/4 md:w-1/2 p-4">
+  <div class="bg-gray-100 p-6 rounded-lg">
+    <%= link_to item_path(item) do %>
+      <img class="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/722x402" alt="content">
+    <% end %>
+    <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
+    <%= link_to item.title, item_path(item), class:"text-lg text-gray-900 font-medium title-font mb-4" %>
+    <p class="leading-relaxed text-base"><%= item.description.truncate(21) %></p>
+  </div>
+</div>
