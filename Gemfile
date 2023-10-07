@@ -31,6 +31,10 @@ gem "cssbundling-rails"
 
 gem "jbuilder"
 
+gem "rolify", "~> 5.2"
+
+gem "cancancan", "~> 3.5"
+
 gem "redis", "~> 4.0"
 
 gem "bcrypt", "~> 3.1.7"

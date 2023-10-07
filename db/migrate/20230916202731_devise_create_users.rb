@@ -4,15 +4,19 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
   def change
     create_table(:users) do |t|
       t.string(:name, null: false)
-      t.string(:email, null: false, default: "", index: {unique: true})
-      t.string(:encrypted_password, null: false, default: "")
-      t.string(:phone, null: false, index: {unique: true})
-      t.string(:aasm_state, null: false)
-      t.string(:reset_password_token, index: {unique: true})
+      t.string(:email, null: false, default: '', index: { unique: true })
+      t.string(:encrypted_password, null: false, default: '')
+      t.string(:phone, null: false, index: { unique: true })
+      t.string(:reset_password_token, index: { unique: true })
       t.datetime(:reset_password_sent_at)
-
       t.datetime(:remember_created_at)
-
+      # geo
+      t.string(:country, null: false, default: '')
+      t.string(:district, null: false, default: '')
+      t.string(:city, null: false, default: '', index: true)
+      t.string(:address, null: false, default: '')
+      # secure
+      t.string(:bank_account, null: false, default: [], array: true)
       # t.integer  :sign_in_count, default: 0, null: false
       # t.datetime :current_sign_in_at
       # t.datetime :last_sign_in_at

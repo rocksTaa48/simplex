@@ -1,4 +1,7 @@
 class ItemsController < ApplicationController
+  # before_action :authenticate_user!, except: %i[show index]
+  authorize_resource
+
   def index
     @items = Item.order(created_at: :desc)
   end
@@ -19,18 +22,13 @@ class ItemsController < ApplicationController
 
   def create
     @subcategories = Subcategory.all
-    if current_user.seller? == true
-      @item = current_user.items.build(item_params)
-      if @item.save
-        flash[:success] = 'Object successfully created'
-        redirect_to(root_path)
-      else
-        flash[:error] = 'Something went wrong'
-        render(:new)
-      end
-    else
-      flash[:error] = 'You/re not a seller'
+    @item = current_user.items.build(item_params)
+    if @item.save
+      flash[:success] = "Object successfully created"
       redirect_to(root_path)
+    else
+      flash[:error] = "Something went wrong"
+      render(:new)
     end
   end
 
@@ -45,7 +43,7 @@ class ItemsController < ApplicationController
 
   def destroy
     @item.destroy
-    flash[:success] = t('.success')
+    flash[:success] = t(".success")
     redirect_to(root_path)
   end
 

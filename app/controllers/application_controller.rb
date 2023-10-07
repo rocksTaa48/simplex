@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
     else
       Cart.find(session[:cart_id])
     end
+
   rescue ActiveRecord::RecordNotFound
     cart = Cart.create
     session[:cart_id] = cart_id
@@ -21,6 +22,13 @@ class ApplicationController < ActionController::Base
       format.html { render(file: "#{Rails.root}/public/404.html", status: :not_found) }
       format.xml { head(:not_found) }
       format.any { head(:not_found) }
+    end
+  end
+
+  rescue_from(CanCan::AccessDenied) do |exception|
+    @error_message = exception.message
+    respond_to do |format|
+      format.html { render(file: "#{Rails.root}/public/401.html", status: 401) }
     end
   end
 end

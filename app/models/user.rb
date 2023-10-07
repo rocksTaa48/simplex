@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  include AASM
-  # Include default devise modules. Others available are:
+  rolify
+  after_create :set_up_role
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise(
     :database_authenticatable,
@@ -18,20 +18,9 @@ class User < ApplicationRecord
     cart
   end
 
-  aasm do
-    state :buyer, initial: true
-    state :seller, :store, :admin
+  private
 
-    event(:up_to_seller) do
-      transitions from: :buyer, to: :seller
-    end
-
-    event(:up_to_store) do
-      transitions from: %i[buyer seller], to: :store
-    end
-
-    event(:sleep) do
-      transitions from: :buyer, to: :admin
-    end
+  def set_up_role
+    add_role(:customer) if roles.blank?
   end
 end
