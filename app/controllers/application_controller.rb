@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
     session[:cart_id] = cart_id
   end
 
+  # Render 404_Error
   def render_error
     respond_to do |format|
       format.html { render(file: "#{Rails.root}/public/404.html", status: :not_found) }
@@ -25,6 +26,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # AccessDenied_Error_CanCan_gem
   rescue_from(CanCan::AccessDenied) do |exception|
     @error_message = exception.message
     respond_to do |format|

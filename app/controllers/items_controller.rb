@@ -43,7 +43,7 @@ class ItemsController < ApplicationController
 
   def destroy
     @item.destroy
-    flash[:success] = t(".success")
+    flash[:success] = "This object destroyed"
     redirect_to(root_path)
   end
 

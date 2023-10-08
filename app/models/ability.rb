@@ -8,9 +8,9 @@ class Ability
 
     return unless user.present?
 
-    can(%i[read update], Item, user:)
+    can(%i[read update create], Item, user:)
 
-    return unless user.admin?
+    return unless user.has_role? :admin
 
     can %i[read update], Item
   end

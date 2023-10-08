@@ -2,3 +2,9 @@
 <div class="mt-20">
   <%= render @user %>
 </div>
+<div class="mt-10">
+  <%= link_to "Sale", new_item_path, class:"px-1 py-2 rounded-xl bg-red-400 hover:bg-red-600"%>
+</div>
+<div class="mt-10">
+  <%= render current_user.items %>
+</div>

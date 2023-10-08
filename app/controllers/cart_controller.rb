@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :authenticate_user!, only: %i[add show remove]
+
   def show
     @item = Item.find_by(id: params[:id])
     @orders = Order.find_by(id: params[:id])
