@@ -18,10 +18,10 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.create(category_params)
     if @category.save
-      flash[:success] = 'Object successfully created'
+      flash[:success] = "Object successfully created"
       redirect_to(root_path)
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = "Something went wrong"
       render(:new)
     end
   end
@@ -37,7 +37,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category.destroy
-    flash[:success] = t('.success')
+    flash[:success] = t(".success")
     redirect_to(root_path)
   end
 

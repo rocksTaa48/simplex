@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   # before_action :authenticate_user!, except: %i[show index]
   authorize_resource
+  before_action :compare_coatalogue
 
   def index
     @items = Item.order(created_at: :desc)
@@ -12,7 +13,8 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
-    @subcategories = Subcategory.all
+    @categories = Category.all
+    @subcategories = @category&.subcategories || []
   end
 
   def edit
@@ -21,13 +23,12 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @subcategories = Subcategory.all
     @item = current_user.items.build(item_params)
     if @item.save
-      flash[:success] = "Object successfully created"
+      flash[:success] = 'Object successfully created'
       redirect_to(root_path)
     else
-      flash[:error] = "Something went wrong"
+      flash[:error] = 'Something went wrong'
       render(:new)
     end
   end
@@ -43,11 +44,16 @@ class ItemsController < ApplicationController
 
   def destroy
     @item.destroy
-    flash[:success] = "This object destroyed"
+    flash[:success] = 'This object destroyed'
     redirect_to(root_path)
   end
 
   private
+
+  def compare_coatalogue
+    @category = Category.find_by(id: params[:category].presence)
+    @subcategory = Subcategory.find_by(id: params[:subcategory].presence)
+  end
 
   def item_params
     params.require(:item).permit(:title, :description, :quantity, :price, :subcategory_id, :user_id)

@@ -20,10 +20,10 @@ class SubcategoriesController < ApplicationController
   def create
     @subcategory = Subcategory.create(subcategory_params)
     if @subcategory.save
-      flash[:success] = 'Object successfully created'
+      flash[:success] = "Object successfully created"
       redirect_to(root_path)
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = "Something went wrong"
       render(:new)
     end
   end
@@ -39,7 +39,7 @@ class SubcategoriesController < ApplicationController
 
   def destroy
     @subcategory.destroy
-    flash[:success] = t('.success')
+    flash[:success] = t(".success")
     redirect_to(root_path)
   end
 
