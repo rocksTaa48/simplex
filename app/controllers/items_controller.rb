@@ -23,6 +23,7 @@ class ItemsController < ApplicationController
   end
 
   def create
+    @categories = Category.all
     @item = current_user.items.build(item_params)
     if @item.save
       flash[:success] = 'Object successfully created'
