@@ -6,8 +6,10 @@
                  { prompt: "- Subcategory -", class:"bg-gray-300 text-gray-700 border rounded-md px-1 py-2 font-extralight" }
   %>
 <% end %>
+<!-- Delete this after complete -->
 <div class="flex flex-col justify-start items-start text-gray-700 font-bold px-2 py-2 bg-red-50">
   <p>Subcategory is --> <%= @item.subcategory.title %></p>
   <p>Category is --> <%= @item.subcategory.category.title %></p>
 </div>
+<!-- End -->
 <%= render "form" %>
