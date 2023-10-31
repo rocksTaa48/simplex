@@ -6,5 +6,9 @@
     <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">SUBTITLE</h3>
     <%= link_to item.title, item_path(item), class:"text-lg text-gray-900 font-medium title-font mb-4" %>
     <p class="leading-relaxed text-base"><%= item.description.truncate(21) %></p>
+    <div class="flex flex-col justify-center">
+      <%= item.id %>
+      <%= link_to "Edit", edit_item_path(item) %>
+    </div>
   </div>
 </div>

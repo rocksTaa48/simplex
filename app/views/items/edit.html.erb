@@ -1,1 +1,13 @@
+<%= form_tag edit_item_path, method: :get, data: { controller: "select", action: "change->select#submit" } do %>
+  <%= select_tag :category, options_for_select(@categories.map{|c| [c.title, c.id]}, @category&.id || params[:current_category] ),
+                 { prompt: "- Category -", class:"bg-gray-300 text-gray-700 border rounded-md px-1 py-2 font-extralight" }
+  %>
+  <%= select_tag :subcategory, options_for_select(@subcategories.map{|s| [s.title, s.id]}, @subcategory&.id || params[:current_subcategory] ),
+                 { prompt: "- Subcategory -", class:"bg-gray-300 text-gray-700 border rounded-md px-1 py-2 font-extralight" }
+  %>
+<% end %>
+<div class="flex flex-col justify-start items-start text-gray-700 font-bold px-2 py-2 bg-red-50">
+  <p>Subcategory is --> <%= @item.subcategory.title %></p>
+  <p>Category is --> <%= @item.subcategory.category.title %></p>
+</div>
 <%= render "form" %>
